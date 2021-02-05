@@ -1,8 +1,11 @@
 import React from 'react';
-import './App.css';
 
 function Top() {
   return (
-    <div>test</div>
-  )
+    <div>
+      <p>test</p>
+    </div>
+  );
 }
+
+export default Top;

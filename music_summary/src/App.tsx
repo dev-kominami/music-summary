@@ -6,7 +6,9 @@ function App() {
     <div className='App'>
       <header className='App-header'>
         <p>Music Summary</p>
-        <a className='App-link'>Login</a>
+        <a href='/top' className='App-link'>
+          Login
+        </a>
       </header>
     </div>
   );
