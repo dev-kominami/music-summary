@@ -1,8 +1,3 @@
-// interface IWindow extends Window {
-//   MusicKit: ()=>void;
-// }
-// declare const window: IWindow;
-// export default window;
 declare global {
   interface Window {
     MusicKit: any;
