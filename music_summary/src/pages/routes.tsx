@@ -1,8 +1,9 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
-import App from './App';
-import Top from './Component/Top';
+import App from '../App';
+
+import Top from './Top';
 
 export const Path = {
   app: '/',

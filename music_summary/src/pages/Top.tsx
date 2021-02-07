@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import window from '../Window.d';
 
 const Top = () => {
-  const start = () => {
+  useEffect(() => {
     const musickit = window.MusicKit.getInstance();
     musickit.authorize().then(function() {
       console.log('did authorize');
     });
+  });
+  const start = () => {
+    console.log('click');
   };
 
   return (
