@@ -1,31 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import * as d3 from 'd3';
 
-import { recentPlayerd, recentPlayerdInterface } from '../services/appleMusic/recentPlayed';
+import { useWindowDimensions } from './useWindow';
 
-const BubbleChart = () => {
-  const recentPlayerdData: recentPlayerdInterface = recentPlayerd(0);
+type Props = {
+  data: [];
+};
+
+const BubbleChart = (props: Props) => {
+  const { width, height } = useWindowDimensions();
+  const [resize, seResize] = useState({ width: width, height: height });
   useEffect(() => {
-    console.log(recentPlayerdData.data);
-    const childrenData = recentPlayerdData.data.map((x: any) => {
+    if (!props.data) return;
+    const childrenData = props.data.map((x: any) => {
       return { Name: x.attributes.name, Count: x.attributes.trackCount };
     });
-    console.log('chidrenData', childrenData);
     if (childrenData.length === 0) return;
     const dataset = {
       children: childrenData,
     };
-    const diameter = 600;
+    const diameter = 1000;
     const color = d3.scaleOrdinal(d3.schemeCategory10);
     const bubble = d3
       .pack()
-      .size([diameter, diameter])
+      .size([resize.width, diameter])
       .padding(1.5);
     const svg = d3
       .select('#bubble')
       .append('svg')
-      .attr('width', diameter)
-      .attr('height', diameter)
+      .attr('viewBox', `0 0 ${resize.width} ${height}`)
+      .attr('preserveAspectRatio', 'xMidYMid')
       .attr('class', 'bubble');
     const nodes = d3.hierarchy(dataset).sum(function(d: any) {
       return d.Count;
@@ -83,7 +87,7 @@ const BubbleChart = () => {
       .attr('fill', 'white');
 
     d3.select(self.frameElement).style('height', diameter + 'px');
-  }, [recentPlayerdData]);
+  }, [props]);
 
   return <a id='bubble'></a>;
 };
