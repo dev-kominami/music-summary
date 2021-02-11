@@ -12,6 +12,7 @@ const BubbleChart = (props: Props) => {
   const [resize, seResize] = useState({ width: width, height: height });
   useEffect(() => {
     if (!props.data) return;
+    //TODO: 表示数を制御したい
     const childrenData = props.data.map((x: any) => {
       return {
         Name: x.attributes.name,
@@ -91,8 +92,12 @@ const BubbleChart = (props: Props) => {
       .attr('fill', 'white');
 
     d3.select(self.frameElement).style('height', diameter + 'px');
+    //TODO: hoverしたらzoomするようにする
+    //https://stackoverflow.com/questions/63174257/react-component-that-zooms-into-an-image-while-keeping-dimensions-on-mouse-over
+    d3.selectAll('.node').on('mouseover', () => {
+      console.log('mouse orver');
+    });
   }, [props]);
-
   return <a id='bubble'></a>;
 };
 

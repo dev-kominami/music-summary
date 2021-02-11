@@ -52,7 +52,7 @@ export const fetchRecentPlayerdAll = async () => {
 
 export const fetchRecentPlayerdTrackAll = async () => {
   const resData: any = [];
-  for (let i = 0; i <= 10; ) {
+  for (let i = 0; i <= 50; ) {
     const r: recentPlayerdInterface = await fetchRecentPlayer(i);
     r.data.forEach(async (obj: any) => {
       if (obj.type === 'albums') {
