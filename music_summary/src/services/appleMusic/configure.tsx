@@ -4,6 +4,7 @@ export interface AppleMusicConfigureInfo {
   devToken: string;
   userToken: string;
   baseApiUrl: string;
+  storefrontId: string;
 }
 
 export const configure = () => {
@@ -11,6 +12,12 @@ export const configure = () => {
   const devToken = musickit.developerToken;
   const userToken = musickit.musicUserToken;
   const baseApiUrl = musickit.api.url;
-  const configureInfo: AppleMusicConfigureInfo = { devToken: devToken, userToken: userToken, baseApiUrl: baseApiUrl };
+  const storefrontId = musickit.storefrontId;
+  const configureInfo: AppleMusicConfigureInfo = {
+    devToken: devToken,
+    userToken: userToken,
+    baseApiUrl: baseApiUrl,
+    storefrontId: storefrontId,
+  };
   return configureInfo;
 };

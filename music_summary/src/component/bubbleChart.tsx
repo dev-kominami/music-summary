@@ -13,7 +13,11 @@ const BubbleChart = (props: Props) => {
   useEffect(() => {
     if (!props.data) return;
     const childrenData = props.data.map((x: any) => {
-      return { Name: x.attributes.name, Count: x.attributes.trackCount };
+      return {
+        Name: x.attributes.name,
+        ArtistName: x.attributes.artistName,
+        Count: Math.random() * (props.data.length - 1) + 1,
+      };
     });
     if (childrenData.length === 0) return;
     const dataset = {
@@ -78,9 +82,9 @@ const BubbleChart = (props: Props) => {
       .attr('dy', '1.3em')
       .style('text-anchor', 'middle')
       .text(function(d: any) {
-        return d.data.Count;
+        return d.data.ArtistName;
       })
-      .attr('font-family', 'Gill Sans')
+      .attr('font-family', 'sans-serif')
       .attr('font-size', function(d) {
         return d.r / 5;
       })
