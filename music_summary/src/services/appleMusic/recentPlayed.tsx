@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 
 import { AppleMusicConfigureInfo, configure } from './configure';
 import { fetchAlbumsTracks } from './albums';
+import { fetchPlaylistsTracks } from './playlists';
 
 const config: AppleMusicConfigureInfo = configure();
 export interface recentPlayerdInterface {
@@ -60,8 +61,14 @@ export const fetchRecentPlayerdTrackAll = async () => {
         album.forEach(track => {
           resData.push(track);
         });
+      } else if (obj.type === 'playlists') {
+        const playlist = await fetchPlaylistsTracks(obj.id);
+        playlist.forEach(track => {
+          resData.push(track);
+        });
+      } else {
+        resData.push(obj);
       }
-      resData.push(obj);
     });
     i = i + 10;
   }

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import window from '../Window.d';
 import BubbleChart from '../component/bubbleChart';
-import { fetchRecentPlayerdTrackAll } from '../services/appleMusic/recentPlayed';
+import { bubbleData } from '../services/bubbleData';
 
 const Top = () => {
   const [data, setData] = useState([] as []);
   useEffect(() => {
-    fetchRecentPlayerdTrackAll().then(val => {
+    bubbleData().then(val => {
       setData(val);
     });
   }, []);
