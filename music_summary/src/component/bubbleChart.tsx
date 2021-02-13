@@ -14,10 +14,13 @@ const BubbleChart = (props: Props) => {
     if (!props.data) return;
     //TODO: 表示数を制御したい
     const childrenData = props.data.map((x: any) => {
+      const artwork = x.attributes.artwork.url.replace('{w}x{h}', '100x100');
       return {
+        id: x.id,
         Name: x.attributes.name,
         ArtistName: x.attributes.artistName,
         Count: Math.random() * (props.data.length - 1) + 1,
+        Icon: artwork,
       };
     });
     if (childrenData.length === 0) return;
@@ -25,7 +28,6 @@ const BubbleChart = (props: Props) => {
       children: childrenData,
     };
     const diameter = 1000;
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
     const bubble = d3
       .pack()
       .size([resize.width, diameter])
@@ -52,6 +54,23 @@ const BubbleChart = (props: Props) => {
         return 'translate(' + d.x + ',' + d.y + ')';
       });
 
+    node
+      .append('defs')
+      .append('pattern')
+      .attr('id', function(d: any) {
+        return d.data.id + '-icon-img';
+      })
+      .attr('width', 1)
+      .attr('height', 1)
+      .attr('patternContentUnits', 'objectBoundingBox')
+      .append('svg:image')
+      .attr('xlink:xlink:href', function(d: any) {
+        return d.data.Icon;
+      })
+      .attr('height', 1)
+      .attr('width', 1)
+      .attr('preserveAspectRatio', 'xMinYMin slice');
+
     node.append('title').text(function(d: any) {
       return d.Name + ': ' + d.Count;
     });
@@ -61,8 +80,8 @@ const BubbleChart = (props: Props) => {
       .attr('r', function(d) {
         return d.r;
       })
-      .style('fill', function(d, i) {
-        return color(`${i}`);
+      .style('fill', function(d: any) {
+        return `url(#${d.data.id}-icon-img)`;
       });
 
     node
@@ -94,9 +113,7 @@ const BubbleChart = (props: Props) => {
     d3.select(self.frameElement).style('height', diameter + 'px');
     //TODO: hoverしたらzoomするようにする
     //https://stackoverflow.com/questions/63174257/react-component-that-zooms-into-an-image-while-keeping-dimensions-on-mouse-over
-    d3.selectAll('.node').on('mouseover', () => {
-      console.log('mouse orver');
-    });
+    // d3.selectAll('.node').on('mouseover', e => {});
   }, [props]);
   return <a id='bubble'></a>;
 };
